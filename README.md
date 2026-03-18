@@ -194,3 +194,13 @@ class FoodCard extends StatelessWidget {
 ```
 
 For additional standards, see `docs/flutter-guidelines.md`.
+
+## What to do next to become a Flutter breakthrough
+
+See `docs/breakthrough-roadmap.md` for a prioritized 90-day strategy covering:
+
+- Executable workflow enforcement
+- Quality scorecards and benchmarks
+- Community skill ecosystem
+- CI trust signals and reference apps
+- CLI and developer-experience expansion
