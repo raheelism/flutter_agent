@@ -15,11 +15,13 @@ class WorkflowRunnerTests(unittest.TestCase):
             runner = WorkflowRunner(base_dir=Path(tmp))
             completed = runner.run("implementation")
 
-            self.assertEqual(completed, PHASES)
+            self.assertEqual(completed, [phase.value for phase in PHASES])
             state = json.loads((Path(tmp) / ".superpowers/workflow/state.json").read_text())
             for phase in PHASES:
-                self.assertTrue(state["phases"][phase]["completed"])
-                self.assertTrue((Path(tmp) / ".superpowers/workflow" / f"{phase}.md").exists())
+                self.assertTrue(state["phases"][phase.value]["completed"])
+                self.assertTrue(
+                    (Path(tmp) / ".superpowers/workflow" / f"{phase.value}.md").exists()
+                )
 
     def test_tdd_runs_only_up_to_tdd(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
