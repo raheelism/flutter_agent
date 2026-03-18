@@ -1,1 +1,227 @@
-# Flutter Agent
+# Flutter Superpowers Agent
+
+This repository adapts the Superpowers workflow philosophy into a **Flutter-specialized AI coding agent design**.
+
+The agent is constrained to a mandatory workflow:
+
+1. Brainstorm
+2. Plan
+3. Test design (TDD)
+4. Implementation
+5. Debugging/verification
+6. Build/deploy readiness
+
+Direct coding without the first three phases is forbidden by the Flutter core skill.
+
+## 1) Architecture overview
+
+The architecture is skill-driven and folder-based:
+
+- `skills/flutter/` contains strict Flutter workflows and guardrails.
+- `templates/flutter-app/` contains a clean Flutter starter structure using feature-first folders.
+- `examples/flutter-agent/` demonstrates a complete run using the prompt: **“Build a food delivery Flutter app”**.
+- `docs/flutter-guidelines.md` centralizes Flutter engineering standards.
+
+### Core behavior adaptation
+
+The adaptation is implemented by `skills/flutter/flutter-superpowers-core.md`:
+
+- Prioritizes Flutter skills when Flutter project signals are present (`pubspec.yaml`, `lib/`, `.dart` files).
+- Injects system behavior:
+  - *“You are a Flutter expert. Always follow Flutter best practices and Superpowers workflow.”*
+- Enforces mandatory gates (brainstorming, planning, TDD) before coding.
+- Enforces Flutter constraints:
+  - No business logic inside UI widgets
+  - Separation of concerns (MVVM/Clean Architecture)
+  - Reusable widgets and shared design system
+
+## 2) New/modified skills
+
+Added in `/skills/flutter/`:
+
+- `flutter-superpowers-core.md` (core behavior override + mandatory gatekeeper)
+- `flutter-brainstorming.md`
+- `flutter-writing-plans.md`
+- `flutter-tdd.md`
+- `flutter-ui-generation.md`
+- `flutter-state-management.md`
+- `flutter-debugging.md`
+- `flutter-build-deploy.md`
+
+## 3) Example skill (full markdown)
+
+### `skills/flutter/flutter-brainstorming.md`
+
+```markdown
+# Skill: flutter-brainstorming
+
+## Purpose
+Refine product ideas into an implementation-ready Flutter concept before planning or code.
+
+## Mandatory position in workflow
+This skill MUST run before `flutter-writing-plans`, `flutter-tdd`, or any code generation.
+
+## Inputs
+- Product/problem statement
+- Target users and platforms (Android/iOS)
+- Constraints (offline support, auth, localization, timelines)
+
+## Procedure
+1. Clarify product scope
+   - Define primary user persona.
+   - List top 3 user goals.
+   - Define non-goals to avoid scope creep.
+
+2. UX flow and screen breakdown
+   - Build a happy-path user journey.
+   - Enumerate screens and transitions.
+   - Identify empty/loading/error states per screen.
+
+3. Widget hierarchy planning
+   - For each screen, draft:
+     - Page-level scaffold
+     - Primary layout widgets
+     - Reusable widget candidates
+   - Separate display widgets from logic owners.
+
+4. Data and state boundaries
+   - Identify entities/models.
+   - Identify local UI state vs app/business state.
+   - Identify async operations and side effects.
+
+5. Risks and technical decisions
+   - State management recommendation (Riverpod/Bloc/Provider) with rationale.
+   - Navigation recommendation (GoRouter/Navigator 2.0) with rationale.
+   - Platform/plugin dependencies and risks.
+
+## Output format
+Return all sections:
+1. Problem framing
+2. User personas and goals
+3. Screen map + navigation flow
+4. Widget hierarchy per screen
+5. Data model candidates
+6. Risks/unknowns
+7. Assumptions needing confirmation
+
+## Quality gate
+Do NOT allow transition to planning unless:
+- At least one complete end-to-end user flow exists.
+- Each major screen has a first-pass widget hierarchy.
+- State boundaries are explicitly documented.
+```
+
+## 4) Repo structure
+
+```text
+.
+├── README.md
+├── docs/
+│   └── flutter-guidelines.md
+├── examples/
+│   └── flutter-agent/
+│       └── food_delivery_workflow.md
+├── skills/
+│   └── flutter/
+│       ├── flutter-brainstorming.md
+│       ├── flutter-build-deploy.md
+│       ├── flutter-debugging.md
+│       ├── flutter-state-management.md
+│       ├── flutter-superpowers-core.md
+│       ├── flutter-tdd.md
+│       ├── flutter-ui-generation.md
+│       └── flutter-writing-plans.md
+└── templates/
+    └── flutter-app/
+        ├── lib/
+        │   ├── app/
+        │   │   ├── app.dart
+        │   │   ├── router.dart
+        │   │   └── theme.dart
+        │   ├── core/
+        │   │   ├── error/failures.dart
+        │   │   └── network/api_client.dart
+        │   ├── features/
+        │   │   └── sample_feature/
+        │   │       ├── data/
+        │   │       ├── domain/
+        │   │       └── presentation/
+        │   └── main.dart
+        └── test/
+            └── widget_test.dart
+```
+
+## 5) Example agent workflow
+
+See `examples/flutter-agent/food_delivery_workflow.md` for a full walkthrough including:
+
+- Brainstorm output
+- Planning output
+- TDD-first test list
+- File structure proposal
+- Implementation snippets
+- Debug/build/deploy checklist
+
+## 6) Sample Flutter code generated by the agent
+
+```dart
+import 'package:flutter/material.dart';
+
+class FoodCard extends StatelessWidget {
+  const FoodCard({
+    super.key,
+    required this.name,
+    required this.priceLabel,
+    required this.onTap,
+  });
+
+  final String name;
+  final String priceLabel;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(name),
+        subtitle: Text(priceLabel),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: onTap,
+      ),
+    );
+  }
+}
+```
+
+For additional standards, see `docs/flutter-guidelines.md`.
+
+## What to do next to become a Flutter breakthrough
+
+See `docs/breakthrough-roadmap.md` for a prioritized 90-day strategy covering:
+
+- Executable workflow enforcement
+- Quality scorecards and benchmarks
+- Community skill ecosystem
+- CI trust signals and reference apps
+- CLI and developer-experience expansion
+
+## Executable workflow runner
+
+To enforce mandatory workflow gates automatically, use:
+
+```bash
+python workflow_runner.py implementation
+```
+
+This creates workflow artifacts in `.superpowers/workflow/` and guarantees order:
+
+1. `brainstorm`
+2. `plan`
+3. `tdd`
+4. `implementation`
+
+You can also target an intermediate phase (for example `plan`), and prerequisites are still executed automatically:
+
+```bash
+python workflow_runner.py plan
+```
