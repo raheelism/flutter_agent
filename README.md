@@ -204,3 +204,24 @@ See `docs/breakthrough-roadmap.md` for a prioritized 90-day strategy covering:
 - Community skill ecosystem
 - CI trust signals and reference apps
 - CLI and developer-experience expansion
+
+## Executable workflow runner
+
+To enforce mandatory workflow gates automatically, use:
+
+```bash
+python workflow_runner.py implementation
+```
+
+This creates workflow artifacts in `.superpowers/workflow/` and guarantees order:
+
+1. `brainstorm`
+2. `plan`
+3. `tdd`
+4. `implementation`
+
+You can also target an intermediate phase (for example `plan`), and prerequisites are still executed automatically:
+
+```bash
+python workflow_runner.py plan
+```
